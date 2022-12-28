@@ -16,15 +16,18 @@ then
     
     if [ $check = "active" ];then
 
-        sudo -u postgres createdb $1'_db';
+        to_lower_string=$1;
+        db_name=${to_lower_string,,}'_db';
+
+        sudo -u postgres createdb ${db_name};
         sudo -u postgres  psql -c "CREATE USER $1  WITH PASSWORD '$(printf '%s' "12345678")';"   
-        sudo -u postgres  psql -c "GRANT ALL PRIVILEGES ON DATABASE $1_db to $1";
+        sudo -u postgres  psql -c "GRANT ALL PRIVILEGES ON DATABASE ${db_name} to $1";
         sudo -u postgres  psql -c "ALTER ROLE $1 WITH SUPERUSER";
         sudo -u postgres  psql -c "ALTER ROLE $1 WITH CREATEROLE";
         sudo -u postgres  psql -c "ALTER ROLE $1 WITH CREATEDB";
         sudo -u postgres  psql -c "ALTER ROLE $1 WITH REPLICATION";
         sudo -u postgres  psql -c "ALTER ROLE $1 WITH BYPASSRLS";
-        sudo -u postgres  psql  $1_db < $PWD/$2 
+        sudo -u postgres  psql  ${db_name} < $PWD/$2;
     else
         echo "Start you postgresql service!!"
     fi
