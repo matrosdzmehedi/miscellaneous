@@ -2,8 +2,12 @@
 
 
 if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
-  echo "Usage: `basename $0` DATABASE_NAME    NAME_OF_DUMP_DB"
-  exit 0
+   echo "It will create new database with _db with username." 
+   echo "Usage: `basename $0` USER_NAME    NAME_OF_DUMP_DB" 
+   echo "" 
+   echo "Example: ./create_db.sh   mehedi   db_dump.pgsql" 
+   echo "It will create user with name: mehedi and database name : mehedi_db" 
+   exit 0 
 fi
 
 if [ -f "$PWD/$2" ] && [[ $2 =~ \.pgsql$ ]] 
